@@ -1,31 +1,60 @@
-import Navbar from "./Layout/NavBar";
+"use client";
+import React, { useState } from "react";
+import { users } from "./Users/users"; // Importez le tableau users
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    const user = users.find(
+      (u) => u.name === username && u.password === password
+    );
+    if (user) {
+      // Authentification réussie
+      console.log("Authentification réussie !");
+      setError("");
+
+      redirect("/dashboard");
+      // Effectuez ici une action appropriée (par exemple, rediriger l'utilisateur)
+    } else {
+      setError("Nom d'utilisateur ou mot de passe incorrect");
+    }
+  };
+
   return (
     <>
       <div className="bg-gray-100 h-screen flex flex-col justify-center items-center">
-        <div className="bg-white p-8 rounded shadow-md w-96">
-          <h2 className="text-2xl font-semibold mb-4 text-center">Connexion</h2>
-          <form>
+        <div className="bg-white p-8 rounded shadow-md w-96 border border-black">
+          <h2 className="text-2xl font-semibold mb-4 text-center text-black">
+            Connexion
+          </h2>
+          <form action={handleSubmit}>
+            {" "}
+            {/* Ajoutez handleSubmit comme gestionnaire de soumission */}
             <div className="mb-4">
               <label
                 htmlFor="login"
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-black text-sm font-bold mb-2"
               >
-                Nom dutilisateur
+                Nom d&rsquo;utilisateur
               </label>
               <input
                 type="text"
                 id="login"
                 name="login"
-                className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring focus:border-blue-500"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="border border-black rounded-md p-2 w-full  focus:outline-none"
                 placeholder="Nom d'utilisateur"
               />
             </div>
             <div className="mb-6">
               <label
                 htmlFor="password"
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-black text-sm font-bold mb-2"
               >
                 Mot de passe
               </label>
@@ -33,14 +62,17 @@ export default function Home() {
                 type="password"
                 id="password"
                 name="password"
-                className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring focus:border-blue-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="border border-black rounded-md p-2 w-full  focus:outline-none"
                 placeholder="Mot de passe"
               />
             </div>
+            {error && <div className="text-red-500 mb-4">{error}</div>}
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full  focus:outline-none focus:ring focus:border-blue-500"
+                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full   focus:outline-none"
               >
                 Connexion
               </button>
