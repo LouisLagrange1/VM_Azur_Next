@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { users } from "./Users/users"; // Importez le tableau users
 import { redirect } from "next/navigation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async () => {
     const user = users.find(
@@ -58,15 +60,28 @@ export default function Home() {
               >
                 Mot de passe
               </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="border border-black rounded-md p-2 w-full  focus:outline-none"
-                placeholder="Mot de passe"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="border border-black rounded-md p-2 w-full focus:outline-none pr-10"
+                  placeholder="Mot de passe"
+                />
+                {showPassword ? (
+                  <FaEyeSlash
+                    className="absolute top-3 right-4 text-gray-400 cursor-pointer"
+                    onClick={() => setShowPassword(false)}
+                  />
+                ) : (
+                  <FaEye
+                    className="absolute top-3 right-4 text-gray-400 cursor-pointer"
+                    onClick={() => setShowPassword(true)}
+                  />
+                )}
+              </div>
             </div>
             {error && <div className="text-red-500 mb-4">{error}</div>}
             <div className="flex justify-center">
