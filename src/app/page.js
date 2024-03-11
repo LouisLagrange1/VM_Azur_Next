@@ -87,7 +87,7 @@ export default function Home() {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full   focus:outline-none"
+                              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full border border-black  "
               >
                 Connexion
               </button>
