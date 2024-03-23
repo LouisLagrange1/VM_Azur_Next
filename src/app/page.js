@@ -5,8 +5,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { connexion } from "./auth/auth";
 
 export default function Home() {
-  const [username, setUsername] = useState("User1");
-  const [password, setPassword] = useState("Password1");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -14,7 +14,7 @@ export default function Home() {
     try {
       await connexion(username, password);
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   };
 

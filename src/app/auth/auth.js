@@ -1,20 +1,24 @@
-import { users } from "../Users/users"; // Importez le tableau users
+"use server";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { createToken } from "./token";
+import { users } from "../Users/users";
+import { createToken } from "../auth/token";
 
 export async function connexion(username, password) {
   const user = users.find(
     (u) => u.name === username && u.password === password
   );
-  console.log(username, password);
 
   if (user) {
-    console.log(user);
     const token = await createToken(user);
-    console.log(token);
-    cookie.set("tokenAuth", token);
+    cookies().set("tokenAuth", token);
     redirect("/dashboard");
   } else {
     throw new Error("Nom d'utilisateur ou mot de passe incorrect");
   }
 }
+
+export const deleteToken = async () => {
+  cookies().delete("tokenAuth");
+  redirect("/");
+};

@@ -1,12 +1,14 @@
 "use server";
-
 import { sign, verify } from "jsonwebtoken";
 
 export const createToken = async (value) => {
-  console.log(value);
-  return sign(value, process.env.SECRET_JWT, { expiresIn: "3h" });
+  return sign(value, "secret");
 };
 
 export const verifyToken = async (value) => {
-  return verify(value, process.env.SECRET_JWT);
+  return verify(value, "secret");
+};
+
+export const getToken = async () => {
+  return "test";
 };
