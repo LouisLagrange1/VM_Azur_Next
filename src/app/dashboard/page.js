@@ -4,7 +4,7 @@ import React from "react";
 export default function Dashboard() {
   return (
     <>
-      <div className="bg-gray-100 h-screen flex flex-row gap-4 justify-center items-center">
+      {/* <div className="bg-gray-100 h-screen flex flex-row gap-4 justify-center items-center">
         <div className="bg-white p-10 rounded shadow-md w-max h-48 border border-black">
           <h2 className="text-2xl font-semibold mb-4 text-center text-black">
             Tableau de bord de UTILISATEUR 1
@@ -58,7 +58,7 @@ export default function Dashboard() {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

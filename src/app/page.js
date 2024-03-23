@@ -1,28 +1,20 @@
 "use client";
 import React, { useState } from "react";
-import { users } from "./Users/users"; // Importez le tableau users
-import { redirect } from "next/navigation";
+
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { connexion } from "./auth/auth";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("User1");
+  const [password, setPassword] = useState("Password1");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async () => {
-    const user = users.find(
-      (u) => u.name === username && u.password === password
-    );
-    if (user) {
-      // Authentification réussie
-      console.log("Authentification réussie !");
-      setError("");
-
-      redirect("/dashboard");
-      // Effectuez ici une action appropriée (par exemple, rediriger l'utilisateur)
-    } else {
-      setError("Nom d'utilisateur ou mot de passe incorrect");
+    try {
+      await connexion(username, password);
+    } catch (error) {
+      setError(error);
     }
   };
 
@@ -34,8 +26,6 @@ export default function Home() {
             Connexion
           </h2>
           <form action={handleSubmit}>
-            {" "}
-            {/* Ajoutez handleSubmit comme gestionnaire de soumission */}
             <div className="mb-4">
               <label
                 htmlFor="login"
@@ -87,7 +77,7 @@ export default function Home() {
             <div className="flex justify-center">
               <button
                 type="submit"
-                              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full border border-black  "
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full border border-black  "
               >
                 Connexion
               </button>
