@@ -1,86 +1,77 @@
-# Next Azure Cloud 💫 - Projet de machines virtuelles éphémères
+# VM Azure Next
 
-Repository du projet : [github.com/adammehdaoui/next-azure-cloud](https://github.com/adammehdaoui/next-azure-cloud)
-
-## Sommaire
-
-- [Description du projet](#description-du-projet)
-- [Installation du projet](#installation-du-projet)
-  - [Remplir le fichier .env](#remplir-le-fichier-env)
-  - [Sans docker](#sans-docker)
-- [Authentification](#authentification)
-- [Documentation du code source](#documentation-du-code-source)
-  - [Structure du projet](#structure-du-projet)
+Lien GitHub : [github.com/LouisLagrange1/VM_Azur_Next](https://github.com/LouisLagrange1/VM_Azur_Next)
 
 ## Description du projet
 
-Ce projet permet de lancer une machine virtuelle avec un nouveau groupe de ressource propre sur le cloud d'Azure. En fonction des droits de l'utilisateur connecté, il est possible de lancer ou non une machine virtuelle d'un système d'exploitation donné.
-L'application renvoie ensuite les étapes pour se connecter à ces machines virtuelles (SSH pour une machine Unix ou RDP avec Microsoft Remote Desktop sur MacOS pour une machine Windows).
+Le projet consiste à créer une application web qui offre aux développeurs la possibilité de créer et d'accéder facilement à des environnements de test temporaires pour évaluer leurs logiciels. Au lieu de se préoccuper des détails techniques de la configuration, les développeurs peuvent simplement choisir leur environnement requis, comme Windows 11, via une interface conviviale, se connecter à distance via RDP, tester leur application, puis se déconnecter une fois les tests terminés.
 
 ## Installation du projet
 
 ### Remplir le fichier .env
 
-Voici comment le fichier .env doit être rempli **(comment récupérer ces valeurs plus bas dans la documentation) :**
+Vous devez avoir un fichier .env à la racine de votre projet et remplacer ce qu'il y a après le "=" par votre clé.
 
 ```bash
-JWT_SECRET='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+JWT_SECRET=votre_clé
 ```
 
-**_Exemple pour générer une clef pour le JWT_SECRET sous MacOS :_**
+**Vous pouvez genérer une clé via le terminal avec Node en utilisant la commande suivante :**
 
 ```bash
-openssl rand -base64 32
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-### Sans docker
+### Lancement du projet
 
-Prérequis : avoir Node installé sur votre machine.
-
-Commandes à effectuer à la racine du projet :
+Pour lancer le projet veillez à bien avoir Node installer sur votre machine, ensuite, lancez les deux commandes suivantes :
 
 ```bash
-npm i && npm run dev
+npm i
 ```
 
-L'application est maintenant accessible depuis le port 3000.
+```bash
+npm run dev
+```
+
+Vous pouvez maintenant accéder au projet via l'url suivante :
+
+```bash
+http://localhost:3000
+```
 
 ## Authentification
 
-L'accès à la plateforme nécessite une authentification. Trois utilisateurs ont été préconfigurés pour faciliter le processus. Veuillez utiliser les informations d'identification suivantes :
+Pour accéder au lancement des VM il faut passer par une phase d' authentification.
+Vous retrouverez ci-dessous les trois utilisateurs déjà configurés avec chacun un rôle différent.
 
-Utilisateur pouvant lancer **trois machines virtuelles avec un OS différent** (CentOS, Windows, Ubuntu)
+**Utilisateur n°1 (Role Admin)** : Accès à toutes les VM
 
-Login : **user-admin**; Mot de passe : **user-admin**
+```bash
+Name : User1
+Password : Password1
+```
 
-Utilisateur pouvant lancer **une machine virtuelle** Ubuntu :
+**Utilisateur n°2 (Role Apprenti)** : Accès à une VM
 
-Login : **user-contributor**; Mot de passe : **user-contributor**
+```bash
+Name : User2
+Password : Password2
+```
 
-Utilisateur **sans crédit** :
+**Utilisateur n°3 (Role Observateur)** : Accès aucune VM
 
-Login : **user-restricted**; Mot de passe : **user-restricted**
+```bash
+Name : User3
+Password : Password3
+```
 
-## Documentation du code source
+## Informations sur le code
 
-L'application est développée avec le framework Next.js (basé sur la librairie React).
-Le framework permet une fonction Back avec les server actions et routes handlers (qui gérerons ici les appels Azure et la connexion des utilisateurs)
+- Le projet est developpé en JavaScript avec le framework Next
 
-Dépendances notables du projet :
+- Le style a été fait avec la bibliothèque TailwindCSS
 
-- TypeScript
-- TailwindCSS
-- Azure SDK : https://learn.microsoft.com/en-us/azure/developer/javascript/how-to/with-azure-sdk/create-manage-virtual-machine
-- react-icons : https://react-icons.github.io/react-icons/
-- jsonwebtoken
-- sonner : https://sonner.emilkowal.ski/
+- Le token d'authentification a été fait avec JsonWebToken
 
-### Structure du projet
-
-Le projet suit la structure _app router_ introduit dans Next 13.
-
-- src/app : contient la logique des routes accessibles côté client
-- src/components : contient les composants React appelés dans les pages principales (dans src/app)
-- src/config : contient la configuration de base de l'application (la configuration de l'image des VM entre autre)
-- src/utils : contient la logique de création des vms et de leur nettoyage ainsi que la gestion de la connexion des utilisateurs à l'application (token JWT + cookies)
-- src/utils/validators : types principaux utilisés dans le code source TypeScript.
+- Les icones présentes dans le projet ont été prisent dans la bibliothèque React Icons
